@@ -520,7 +520,7 @@
         <div class="hero hero-sticky">
           <div class="hero-scene" aria-hidden="true">
             <div class="hero-media"><img class="scene-fallback" data-asset="fundo" alt=""></div>
-            <video id="hero-video" class="hero-video" playsinline muted autoplay loop preload="auto" tabindex="-1" aria-hidden="true">
+            <video id="hero-video" class="hero-video" playsinline muted preload="auto" tabindex="-1" aria-hidden="true">
               <source src="20261102_020723_0_UTC_0.mp4" type="video/mp4">
             </video>
             <div class="hero-overlay"></div>
@@ -969,11 +969,13 @@ if (heroVideo && heroTrack) {
   heroVideo.muted = true;
   heroVideo.defaultMuted = true;
   heroVideo.playsInline = true;
+  heroVideo.autoplay = false;
+  heroVideo.loop = false;
+  heroVideo.pause();
 
   const videoUrl = '20261102_020723_0_UTC_0.mp4';
 
-  // 1. BLOB PRELOADING: armazena os 1.76MB do vídeo diretamente na RAM do navegador.
-  // Resolve o problema de servidores que não suportam Range Requests e garante seeks instantâneos a 30-60 FPS.
+  // 1. BLOB PRELOADING: carrega o vídeo de 1.76MB direto na RAM para seeks instantâneos sem latência de rede
   fetch(videoUrl)
     .then(res => {
       if (!res.ok) throw new Error('HTTP ' + res.status);
@@ -981,9 +983,11 @@ if (heroVideo && heroTrack) {
     })
     .then(blob => {
       const blobUrl = URL.createObjectURL(blob);
-      const prevTime = heroVideo.currentTime || 0.001;
       heroVideo.src = blobUrl;
-      heroVideo.currentTime = prevTime;
+      heroVideo.pause();
+      if (!hasUserScrolled) {
+        heroVideo.currentTime = 0.001;
+      }
     })
     .catch(err => {
       console.log('Video blob fallback:', err);
@@ -996,13 +1000,14 @@ if (heroVideo && heroTrack) {
   let hasUserScrolled = false;
 
   function markVideoReady() {
+    heroVideo.pause();
     if (!isVideoReady && heroVideo.duration && !isNaN(heroVideo.duration)) {
       isVideoReady = true;
       heroVideo.classList.add('is-ready');
       if (!hasUserScrolled) {
+        heroVideo.pause();
         try {
           heroVideo.currentTime = 0.001;
-          heroVideo.pause();
         } catch (e) {}
       }
       syncHeroVisuals(getScrollProgress());
@@ -1015,12 +1020,6 @@ if (heroVideo && heroTrack) {
   if (heroVideo.readyState >= 2) {
     markVideoReady();
   }
-
-  heroVideo.addEventListener('timeupdate', () => {
-    if (!heroVideo.classList.contains('is-ready') && heroVideo.currentTime > 0) {
-      heroVideo.classList.add('is-ready');
-    }
-  });
 
   heroVideo.addEventListener('seeking', () => { isSeeking = true; });
   heroVideo.addEventListener('seeked', () => {
@@ -1069,10 +1068,23 @@ if (heroVideo && heroTrack) {
   function processScrub() {
     if (!isVideoReady || !heroVideo.duration || isSeeking) return;
 
+    // Se o usuário ainda não rolou ou se está no topo absoluto, mantém estritamente pausado no início
+    if (!hasUserScrolled || targetProgress <= 0.001) {
+      if (!heroVideo.paused) {
+        heroVideo.pause();
+      }
+      if (heroVideo.currentTime > 0.03) {
+        try {
+          heroVideo.currentTime = 0.001;
+        } catch (e) {}
+      }
+      return;
+    }
+
     const targetTime = currentProgress * heroVideo.duration;
     const diff = targetTime - heroVideo.currentTime;
 
-    // Se a diferença for insignificante (< 15ms), estabiliza e pausa
+    // Se a diferença for insignificante (< 15ms), estabiliza e pausa no frame exato
     if (Math.abs(diff) < 0.015) {
       if (!heroVideo.paused) {
         heroVideo.pause();
@@ -1090,7 +1102,7 @@ if (heroVideo && heroTrack) {
         heroVideo.play().catch(() => {});
       }
     } else {
-      // 2) Ao rolar para trás (retrocesso) ou saltos rápidos: seek instantâneo na memória
+      // 2) Ao rolar para trás (retrocesso) ou saltos rápidos: seek instantâneo
       if (!heroVideo.paused) {
         heroVideo.pause();
       }
@@ -1105,8 +1117,11 @@ if (heroVideo && heroTrack) {
   }
 
   function onScrollOrResize() {
-    hasUserScrolled = true;
-    targetProgress = getScrollProgress();
+    const p = getScrollProgress();
+    if (p > 0.001) {
+      hasUserScrolled = true;
+    }
+    targetProgress = p;
     syncHeroVisuals(targetProgress);
   }
 
