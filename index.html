@@ -89,9 +89,13 @@
     /* Track de rolagem e viewport fixo do Hero com vídeo em tela cheia */
     .hero-track{position:relative;width:100%;height:380vh;background:var(--bg)}
     .hero.hero-sticky{position:sticky;top:0;left:0;width:100%;min-height:100svh;height:100svh;max-height:none;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg);isolation:isolate}
-    .hero-video{position:absolute;top:50%;left:50%;width:100%;height:100%;min-width:100%;min-height:100%;object-fit:cover;object-position:center;transform:translate(-50%,-50%);pointer-events:none;z-index:1;background:#000;will-change:transform}
-    .hero-fade-black{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:5;will-change:opacity}
-    .hero{position:relative;display:flex;min-height:100svh;height:100svh;max-height:1100px;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);isolation:isolate}.hero-scene,.contact-scene{position:absolute;inset:0;z-index:-2;overflow:hidden}.scene-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%;filter:saturate(.72);transform:scale(1.035)}.background-video{position:absolute;top:50%;left:50%;z-index:1;width:auto;height:auto;min-width:100%;min-height:100%;object-fit:cover;opacity:.38;transform:translate(-50%,-50%);filter:saturate(.7) contrast(1.08);pointer-events:none}.background-video.mirrored{transform:translate(-50%,-50%) scaleY(-1)}.hero-overlay{position:absolute;z-index:2;inset:0;background:linear-gradient(180deg,rgba(4,5,6,.22),rgba(4,5,6,.24) 38%,rgba(4,5,6,.6) 77%,var(--bg)),radial-gradient(ellipse at 50% 38%,transparent,rgba(0,0,0,.28) 80%)}.grain{position:absolute;z-index:3;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}.hero-content{position:relative;z-index:4;width:min(100%,1040px);padding:96px 24px 18px;text-align:center}.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:34px;color:rgba(255,255,255,.56);font-size:10px;font-weight:500;letter-spacing:.32em;text-transform:uppercase}.blue-dot{width:5px;height:5px;border-radius:50%;background:var(--blue1);box-shadow:0 0 12px rgba(137,170,204,.75)}.hero-name{margin:0 0 22px;font-family:var(--font-display);font-size:clamp(4.25rem,12vw,8.8rem);font-style:italic;font-weight:400;letter-spacing:-.055em;line-height:.82;text-shadow:0 8px 48px rgba(0,0,0,.26)}.hero-name .word{display:inline-block}.mobile-break{display:none}.hero-role{margin:0 0 17px;color:rgba(255,255,255,.76);font-size:clamp(18px,2.2vw,24px);font-weight:300;letter-spacing:-.03em}.role-box{display:inline-block;min-width:118px;text-align:left;vertical-align:baseline}.role-word{display:inline-block;color:var(--text);font-family:var(--font-display);font-size:1.32em;font-style:italic;line-height:.8}.hero-description{max-width:480px;margin:0 auto;color:rgba(255,255,255,.56);font-size:14px;font-weight:300;line-height:1.9}.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:42px}.hero-in{opacity:0;filter:blur(10px);transform:translateY(20px)}.name-reveal{opacity:0;transform:translateY(50px)}body.ready .name-reveal{animation:reveal-name 1.2s .1s cubic-bezier(.22,1,.36,1) forwards}body.ready .hero-in{animation:reveal-up 1s cubic-bezier(.22,1,.36,1) forwards}body.ready .hero-eyebrow{animation-delay:.25s}body.ready .hero-role{animation-delay:.38s}body.ready .hero-description{animation-delay:.5s}body.ready .hero-actions{animation-delay:.62s}
+    .hero-scene{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none}
+    .hero-media{position:absolute;inset:0;z-index:1}
+    .hero-video{position:absolute;top:50%;left:50%;width:100%;height:100%;min-width:100%;min-height:100%;object-fit:cover;object-position:center;transform:translate(-50%,-50%);pointer-events:none;z-index:2;background:transparent;opacity:0;transition:opacity .35s ease;will-change:transform,opacity}
+    .hero-video.is-ready{opacity:1}
+    .hero-overlay{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,rgba(4,6,9,.25) 0%,rgba(4,6,9,.62) 100%),linear-gradient(180deg,rgba(10,10,10,.6) 0%,rgba(10,10,10,.14) 32%,rgba(10,10,10,.25) 70%,rgba(10,10,10,.75) 100%)}
+    .hero-fade-black{position:absolute;inset:0;background:var(--bg);opacity:0;pointer-events:none;z-index:4;will-change:opacity}
+    .hero{position:relative;display:flex;min-height:100svh;height:100svh;max-height:1100px;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);isolation:isolate}.contact-scene{position:absolute;inset:0;z-index:-2;overflow:hidden}.scene-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 58%;filter:saturate(.72);transform:scale(1.035)}.background-video{position:absolute;top:50%;left:50%;z-index:1;width:auto;height:auto;min-width:100%;min-height:100%;object-fit:cover;opacity:.38;transform:translate(-50%,-50%);filter:saturate(.7) contrast(1.08);pointer-events:none}.background-video.mirrored{transform:translate(-50%,-50%) scaleY(-1)}.hero-overlay{position:absolute;z-index:2;inset:0;background:linear-gradient(180deg,rgba(4,5,6,.22),rgba(4,5,6,.24) 38%,rgba(4,5,6,.6) 77%,var(--bg)),radial-gradient(ellipse at 50% 38%,transparent,rgba(0,0,0,.28) 80%)}.grain{position:absolute;z-index:3;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.92' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}.hero-content{position:relative;z-index:4;width:min(100%,1040px);padding:96px 24px 18px;text-align:center}.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;margin-bottom:34px;color:rgba(255,255,255,.56);font-size:10px;font-weight:500;letter-spacing:.32em;text-transform:uppercase}.blue-dot{width:5px;height:5px;border-radius:50%;background:var(--blue1);box-shadow:0 0 12px rgba(137,170,204,.75)}.hero-name{margin:0 0 22px;font-family:var(--font-display);font-size:clamp(4.25rem,12vw,8.8rem);font-style:italic;font-weight:400;letter-spacing:-.055em;line-height:.82;text-shadow:0 8px 48px rgba(0,0,0,.26)}.hero-name .word{display:inline-block}.mobile-break{display:none}.hero-role{margin:0 0 17px;color:rgba(255,255,255,.76);font-size:clamp(18px,2.2vw,24px);font-weight:300;letter-spacing:-.03em}.role-box{display:inline-block;min-width:118px;text-align:left;vertical-align:baseline}.role-word{display:inline-block;color:var(--text);font-family:var(--font-display);font-size:1.32em;font-style:italic;line-height:.8}.hero-description{max-width:480px;margin:0 auto;color:rgba(255,255,255,.56);font-size:14px;font-weight:300;line-height:1.9}.hero-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:42px}.hero-in{opacity:0;filter:blur(10px);transform:translateY(20px)}.name-reveal{opacity:0;transform:translateY(50px)}body.ready .name-reveal{animation:reveal-name 1.2s .1s cubic-bezier(.22,1,.36,1) forwards}body.ready .hero-in{animation:reveal-up 1s cubic-bezier(.22,1,.36,1) forwards}body.ready .hero-eyebrow{animation-delay:.25s}body.ready .hero-role{animation-delay:.38s}body.ready .hero-description{animation-delay:.5s}body.ready .hero-actions{animation-delay:.62s}
 
 /* ========================================================================== */
 /* BOTÕES — anéis com gradiente no hover (sólido, contorno e discreto)
@@ -516,7 +520,9 @@
         <div class="hero hero-sticky">
           <div class="hero-scene" aria-hidden="true">
             <div class="hero-media"><img class="scene-fallback" data-asset="fundo" alt=""></div>
-            <video id="hero-video" class="hero-video" src="20261102_014035_0_UTC_0.mp4" playsinline muted preload="auto" tabindex="-1" aria-hidden="true"></video>
+            <video id="hero-video" class="hero-video" playsinline muted autoplay loop preload="auto" tabindex="-1" aria-hidden="true">
+              <source src="20261102_020723_0_UTC_0.mp4" type="video/mp4">
+            </video>
             <div class="hero-overlay"></div>
             <div class="hero-fade-black" id="hero-fade-black" aria-hidden="true"></div>
           </div>
@@ -951,7 +957,7 @@ document.querySelectorAll('.reveal,.reveal-card').forEach((node,index)=>{node.st
 
 
 /* ------------------------------------------------------------------------
-   HERO VIDEO — controle cinemático por scroll (avanço, retrocesso, pausa exata e fade to black)
+   HERO VIDEO — controle cinemático fluido a 30-60 FPS (Blob local, avanço, retrocesso e fade to black)
    ------------------------------------------------------------------------ */
 const heroTrack = document.getElementById('home');
 const heroVideo = document.getElementById('hero-video');
@@ -964,41 +970,62 @@ if (heroVideo && heroTrack) {
   heroVideo.defaultMuted = true;
   heroVideo.playsInline = true;
 
+  const videoUrl = '20261102_020723_0_UTC_0.mp4';
+
+  // 1. BLOB PRELOADING: armazena os 1.76MB do vídeo diretamente na RAM do navegador.
+  // Resolve o problema de servidores que não suportam Range Requests e garante seeks instantâneos a 30-60 FPS.
+  fetch(videoUrl)
+    .then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.blob();
+    })
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      const prevTime = heroVideo.currentTime || 0.001;
+      heroVideo.src = blobUrl;
+      heroVideo.currentTime = prevTime;
+    })
+    .catch(err => {
+      console.log('Video blob fallback:', err);
+    });
+
   let targetProgress = 0;
   let currentProgress = 0;
   let isVideoReady = false;
   let isSeeking = false;
+  let hasUserScrolled = false;
 
-  function initHeroVideo() {
-    if (heroVideo.duration && !isNaN(heroVideo.duration)) {
+  function markVideoReady() {
+    if (!isVideoReady && heroVideo.duration && !isNaN(heroVideo.duration)) {
       isVideoReady = true;
-      heroVideo.pause();
-      syncHeroScroll(true);
+      heroVideo.classList.add('is-ready');
+      if (!hasUserScrolled) {
+        try {
+          heroVideo.currentTime = 0.001;
+          heroVideo.pause();
+        } catch (e) {}
+      }
+      syncHeroVisuals(getScrollProgress());
     }
   }
 
-  heroVideo.addEventListener('loadedmetadata', initHeroVideo);
-  heroVideo.addEventListener('canplay', initHeroVideo);
-  if (heroVideo.readyState >= 1) {
-    initHeroVideo();
+  heroVideo.addEventListener('loadedmetadata', markVideoReady);
+  heroVideo.addEventListener('canplay', markVideoReady);
+  heroVideo.addEventListener('loadeddata', markVideoReady);
+  if (heroVideo.readyState >= 2) {
+    markVideoReady();
   }
 
-  // Prepara o decodificador de vídeo para resposta instantânea ao scroll
-  heroVideo.load();
-  const primePromise = heroVideo.play();
-  if (primePromise !== undefined) {
-    primePromise.then(() => {
-      heroVideo.pause();
-      heroVideo.currentTime = 0;
-    }).catch(() => {
-      heroVideo.pause();
-    });
-  }
+  heroVideo.addEventListener('timeupdate', () => {
+    if (!heroVideo.classList.contains('is-ready') && heroVideo.currentTime > 0) {
+      heroVideo.classList.add('is-ready');
+    }
+  });
 
   heroVideo.addEventListener('seeking', () => { isSeeking = true; });
   heroVideo.addEventListener('seeked', () => {
     isSeeking = false;
-    applyVideoTime();
+    processScrub();
   });
 
   function getScrollProgress() {
@@ -1011,8 +1038,8 @@ if (heroVideo && heroTrack) {
     return Math.max(0, Math.min(1, scrolled / maxScroll));
   }
 
-  function updateVisualLayers(prog) {
-    // Esmaecimento suave do conteúdo textual ao avançar no vídeo (0.00 → 0.18)
+  function syncHeroVisuals(prog) {
+    // Esmaecimento suave do texto no início da rolagem (0.00 → 0.18)
     if (heroContent) {
       const textProg = Math.max(0, Math.min(1, prog / 0.18));
       const opacity = 1 - textProg;
@@ -1021,13 +1048,13 @@ if (heroVideo && heroTrack) {
       heroContent.style.pointerEvents = opacity < 0.05 ? 'none' : 'auto';
     }
 
-    // Indicador "Role" esmaece imediatamente após o início do scroll
+    // Indicador "Role" esmaece logo no início (0.00 → 0.08)
     if (heroScrollCue) {
       const cueProg = Math.max(0, Math.min(1, prog / 0.08));
       heroScrollCue.style.opacity = (1 - cueProg).toFixed(3);
     }
 
-    // Transição gradual para preto (fade to black) ao aproximar-se do final (0.70 → 0.96)
+    // Efeito gradual de escurecimento (fade to black) ao chegar ao final (0.70 → 0.96)
     if (heroFadeBlack) {
       const fadeStart = 0.70;
       const fadeEnd = 0.96;
@@ -1039,11 +1066,34 @@ if (heroVideo && heroTrack) {
     }
   }
 
-  function applyVideoTime() {
+  function processScrub() {
     if (!isVideoReady || !heroVideo.duration || isSeeking) return;
+
     const targetTime = currentProgress * heroVideo.duration;
-    const delta = targetTime - heroVideo.currentTime;
-    if (Math.abs(delta) >= 0.02) {
+    const diff = targetTime - heroVideo.currentTime;
+
+    // Se a diferença for insignificante (< 15ms), estabiliza e pausa
+    if (Math.abs(diff) < 0.015) {
+      if (!heroVideo.paused) {
+        heroVideo.pause();
+      }
+      return;
+    }
+
+    // MOTOR CINEMÁTICO 30-60 FPS:
+    // 1) Ao rolar para frente (diferença positiva de 0.03s a 0.85s):
+    // Usa aceleração nativa via playbackRate + play() para decodificação 60 FPS contínua sem engasgos
+    if (diff > 0.03 && diff < 0.85) {
+      const speed = Math.max(0.8, Math.min(4.0, diff * 4.5));
+      heroVideo.playbackRate = speed;
+      if (heroVideo.paused) {
+        heroVideo.play().catch(() => {});
+      }
+    } else {
+      // 2) Ao rolar para trás (retrocesso) ou saltos rápidos: seek instantâneo na memória
+      if (!heroVideo.paused) {
+        heroVideo.pause();
+      }
       try {
         if ('fastSeek' in heroVideo) {
           heroVideo.fastSeek(targetTime);
@@ -1054,33 +1104,30 @@ if (heroVideo && heroTrack) {
     }
   }
 
-  function syncHeroScroll(immediate) {
+  function onScrollOrResize() {
+    hasUserScrolled = true;
     targetProgress = getScrollProgress();
-    updateVisualLayers(targetProgress);
-    if (immediate) {
-      currentProgress = targetProgress;
-      applyVideoTime();
-    }
+    syncHeroVisuals(targetProgress);
   }
 
-  // Loop de alta precisão com interpolação contínua (lerp) para rolagem 60/120fps fluida
-  function renderScrub() {
+  // Interpolação contínua (lerp a 60/120fps)
+  function renderLoop() {
     const diff = targetProgress - currentProgress;
-    if (Math.abs(diff) > 0.0004) {
-      currentProgress += diff * 0.14;
+    if (Math.abs(diff) > 0.0003) {
+      currentProgress += diff * 0.16;
       currentProgress = Math.max(0, Math.min(1, currentProgress));
-      applyVideoTime();
+      processScrub();
     } else if (currentProgress !== targetProgress) {
       currentProgress = targetProgress;
-      applyVideoTime();
+      processScrub();
     }
-    requestAnimationFrame(renderScrub);
+    requestAnimationFrame(renderLoop);
   }
-  requestAnimationFrame(renderScrub);
+  requestAnimationFrame(renderLoop);
 
-  window.addEventListener('scroll', () => syncHeroScroll(false), { passive: true });
-  window.addEventListener('resize', () => syncHeroScroll(false), { passive: true });
-  syncHeroScroll(true);
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+  onScrollOrResize();
 }
 
 /* ------------------------------------------------------------------------
